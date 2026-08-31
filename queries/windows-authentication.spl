@@ -1,0 +1,3 @@
+index=windows sourcetype="WinEventLog:Security" EventCode=4625
+| table _time host Account_Name TargetUserName Logon_Type Source_Network_Address Workstation_Name Failure_Reason
+| sort - _time

@@ -1,0 +1,3 @@
+index=windows sourcetype="WinEventLog:Microsoft-Windows-DNS-Client/Operational"
+| stats count by host
+| sort - count

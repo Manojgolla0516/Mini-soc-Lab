@@ -1,0 +1,40 @@
+[WinEventLog://Security]
+disabled = 0
+index = windows
+renderXml = false
+
+[WinEventLog://System]
+disabled = 0
+index = windows
+renderXml = false
+
+[WinEventLog://Application]
+disabled = 0
+index = windows
+renderXml = false
+
+[WinEventLog://Microsoft-Windows-DNS-Client/Operational]
+disabled = 0
+index = windows
+renderXml = false
+
+[WinEventLog://Microsoft-Windows-Dhcp-Client/Operational]
+disabled = 0
+index = windows
+renderXml = false
+
+[WinEventLog://Microsoft-Windows-PowerShell/Operational]
+disabled = 0
+index = windows
+renderXml = false
+
+[WinEventLog://Microsoft-Windows-Windows Defender/Operational]
+disabled = 0
+index = windows
+renderXml = false
+
+[monitor://C:\GmailSplunkLab\gmail_events.json]
+disabled = 0
+index = windows
+sourcetype = gmail:email
+crcSalt = <SOURCE>

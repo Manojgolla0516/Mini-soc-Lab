@@ -1,0 +1,3 @@
+index=windows sourcetype="gmail:email"
+| table _time from to subject date message_id
+| sort - _time

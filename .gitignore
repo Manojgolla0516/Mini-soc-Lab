@@ -1,0 +1,23 @@
+# Gmail / personal data
+gmail_events.json
+*.eml
+*.msg
+
+# Secrets / credentials
+.env
+*.key
+*.pem
+credentials.json
+token.json
+client_secret*.json
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Splunk generated data/logs
+*.log
+
+# Windows
+Thumbs.db
+Desktop.ini
