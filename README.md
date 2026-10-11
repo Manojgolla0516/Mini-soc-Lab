@@ -1,4 +1,4 @@
-# Turning My Windows 11 Laptop into a Mini SOC
+# My Windows 11 Laptop into a Mini SOC
 
 A hands-on security monitoring lab built around a personal Windows 11 laptop and Splunk. This project documents the collection and investigation of endpoint and Gmail security metadata, with practical examples of the searches and workflows used to explore it.
 
