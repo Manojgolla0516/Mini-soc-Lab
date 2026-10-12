@@ -10,6 +10,7 @@ gmail_events.json
 credentials.json
 token.json
 client_secret*.json
+splunk/mini_soc_alerts/local/
 
 # Python
 __pycache__/
