@@ -1,0 +1,4 @@
+process_path,browser_name,suspicious_switches,rule_description,enabled
+*chrome.exe,Google Chrome,"--remote-debugging-port(?:=|\s|$)|--load-extension(?:=|\s|$)|--disable-web-security|--proxy-server(?:=|\s|$)","Remote debugging; extension loading; web-security bypass; or proxy override",1
+*msedge.exe,Microsoft Edge,"--remote-debugging-port(?:=|\s|$)|--load-extension(?:=|\s|$)|--disable-web-security|--proxy-server(?:=|\s|$)","Remote debugging; extension loading; web-security bypass; or proxy override",1
+*firefox.exe,Mozilla Firefox,"--remote-debugging-port|-start-debugger-server|--marionette","Remote debugging or automation interface enabled",1

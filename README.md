@@ -19,11 +19,12 @@ The objective is to collect security telemetry from the endpoint, analyze events
 - Build and refine SPL detection queries.
 - Practice false-positive and false-negative analysis.
 - Develop phishing investigation workflows.
-- Create SOC dashboards and alerts.
+- Create configurable browser and Windows security detections.
+- Send alert notifications through email and SMS.
 
 ## Architecture
 
-The diagram shows the documented logical flow: Windows event sources and Gmail security metadata are collected into Splunk, where the events can be searched and investigated.
+The diagram shows the documented collection and alerting paths. Splunk searches endpoint events and Gmail security metadata, then sends configured notifications through email or the Twilio SMS action.
 
 ```mermaid
 flowchart LR
@@ -55,6 +56,9 @@ flowchart LR
     Collector -->|"Collected metadata"| Splunk
 
     Splunk --> Investigation["SOC searches and investigations"]
+    Splunk --> Email["Email alerts"]
+    Splunk --> Twilio["Twilio SMS alert action"]
+    Twilio --> Phone["Configured phone"]
 ```
 
 ## Current telemetry
@@ -70,6 +74,8 @@ flowchart LR
 | Windows Defender | ✅ Enabled |
 | Gmail security metadata | ✅ Connected |
 | Splunk | ✅ Running |
+
+The alert searches are included but are disabled until notification recipients, Twilio credentials, and schedules are configured.
 
 ## Example investigations
 
@@ -106,6 +112,19 @@ index=windows sourcetype="gmail:email"
 | table _time from to subject date message_id
 ```
 
+## Alerting
+
+The Splunk alerting app in [splunk/mini_soc_alerts](splunk/mini_soc_alerts/README.md) includes:
+
+- Browser launch rules for Chrome, Edge, and Firefox. Edit `splunk/mini_soc_alerts/lookups/browser_alert_rules.csv` to enable, disable, or tune each browser's process and suspicious-switch patterns.
+- Windows Security detections for repeated failed logons, security audit log clearing, audit policy changes, user creation, and security-group membership changes.
+- Microsoft Defender malware and potentially unwanted software detections.
+- Email actions through Splunk and a custom Twilio SMS action.
+
+The scheduled searches and notification actions are off by default. Follow the app guide to configure SMTP, Twilio system environment variables, browser rules, and alert schedules. Browser process detections rely on Windows Security process-creation auditing (Event ID 4688). Capturing command lines also requires the Windows policy **Include command line in process creation events**. Those command lines are recorded in plain text, so restrict access to the event log and Splunk data.
+
+The SMS action sends a concise alert summary and does not include full process command lines or raw events.
+
 ## SOC investigation workflow
 
 Use a repeatable process to validate alerts and document what the evidence shows:
@@ -124,18 +143,23 @@ Use a repeatable process to validate alerts and document what the evidence shows
 .
 ├── collector/
 │   └── gmail_collector.py
-├── splunk/
-│   └── inputs.conf.example
 ├── queries/
 │   ├── dns-investigation.spl
 │   ├── gmail-investigation.spl
-│   ├── windows-security.spl
-│   ├── powershell-investigation.spl
-│   └── defender-investigation.spl
-├── docs/
-│   ├── architecture.md
-│   └── investigation-workflow.md
-├── screenshots/
+│   └── windows-authentication.spl
+├── splunk/
+│   ├── inputs.conf.example
+│   └── mini_soc_alerts/
+│       ├── bin/
+│       │   └── twilio_sms.py
+│       ├── default/
+│       │   ├── alert_actions.conf
+│       │   ├── app.conf
+│       │   ├── savedsearches.conf
+│       │   └── transforms.conf
+│       ├── lookups/
+│       │   └── browser_alert_rules.csv
+│       └── README.md
 ├── .gitignore
 └── README.md
 ```
@@ -149,7 +173,7 @@ This repository does not contain:
 - Personal email contents.
 - Sensitive configuration files.
 
-Real Gmail data is kept locally and excluded from version control using `.gitignore`. Review files and screenshots for credentials and personal information before committing changes.
+Real Gmail data is kept locally and excluded from version control using `.gitignore`. Twilio credentials are supplied through Windows system environment variables and must never be committed. Local Splunk app overrides are ignored by Git. Review files and screenshots for credentials and personal information before committing changes.
 
 ## Roadmap
 
@@ -159,7 +183,7 @@ Real Gmail data is kept locally and excluded from version control using `.gitign
 - Develop phishing detections.
 - Integrate Sysmon.
 - Add process monitoring.
-- Build Splunk dashboards and automated alerts.
+- Expand Splunk dashboards, alert coverage, and response workflows.
 - Map detections to MITRE ATT&CK.
 - Expand detection engineering.
 - Document incident-response case studies.
