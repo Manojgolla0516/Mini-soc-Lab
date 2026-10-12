@@ -393,10 +393,11 @@ def send_email(alert):
 
 def deliver_alert(alert, state, config, dry_run):
     key = alert["rule_id"] + "|" + alert["host"]
+    cooldown_key = ("dry-run|" if dry_run else "") + key
     now = time.time()
     cooldown = int(config.get("cooldown_seconds", 900))
     last_alerts = state.setdefault("last_alerts", {})
-    previous = float(last_alerts.get(key, 0))
+    previous = float(last_alerts.get(cooldown_key, 0))
     if now - previous < cooldown:
         return
 
@@ -418,7 +419,7 @@ def deliver_alert(alert, state, config, dry_run):
                 LOG.info("SMS notification sent for %s", alert["rule_id"])
             except Exception as exc:
                 LOG.error("SMS notification failed for %s: %s", alert["rule_id"], exc)
-    last_alerts[key] = now
+    last_alerts[cooldown_key] = now
 
 
 def resolve_path(config_path, configured):
