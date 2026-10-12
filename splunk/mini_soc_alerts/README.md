@@ -15,7 +15,7 @@ These are starter detections. Development tools can legitimately use browser deb
 
 ## Install and configure
 
-1. Copy `splunk/mini_soc_alerts` from this repository into `%SPLUNK_HOME%\\etc\\apps\\mini_soc_alerts` on your standalone Splunk instance.
+1. Copy `splunk/mini_soc_alerts` from this repository into `%SPLUNK_HOME%\etc\apps\mini_soc_alerts` on your standalone Splunk instance.
 2. Enable **Audit Process Creation** under Advanced Audit Policy Configuration. To capture browser arguments, also enable **Include command line in process creation events** under Computer Configuration > Administrative Templates > System > Audit Process Creation. Windows logs those command lines as plain text, so limit access to the Security log and Splunk index. See [Microsoft's Event 4688 guidance](https://learn.microsoft.com/windows/security/threat-protection/auditing/event-4688).
 3. Create a Twilio API key and an SMS-enabled Twilio number. Set these Windows **system** environment variables on the Splunk host:
    - `TWILIO_ACCOUNT_SID`
@@ -26,7 +26,7 @@ These are starter detections. Development tools can legitimately use browser deb
    
    Restart the Splunk service after changing system environment variables. The code uses Twilio's HTTPS [Messages API](https://www.twilio.com/docs/messaging/api/message-resource) with API key authentication; no Twilio secret belongs in Git.
 4. Configure Splunk's SMTP settings.
-5. Create `%SPLUNK_HOME%\\etc\\apps\\mini_soc_alerts\\local\\savedsearches.conf` overrides for the rules you want to enable. In each chosen stanza, set `enableSched = 1`, `action.email = 1`, `action.email.to = your-address@example.com`, and `action.twilio_sms = 1`. Leave unselected rules disabled. The repository's `.gitignore` excludes the app's `local/` directory.
+5. Create `%SPLUNK_HOME%\etc\apps\mini_soc_alerts\local\savedsearches.conf` overrides for the rules you want to enable. In each chosen stanza, set `enableSched = 1`, `action.email = 1`, `action.email.to = your-address@example.com`, and `action.twilio_sms = 1`. Leave unselected rules disabled. The repository's `.gitignore` excludes the app's `local/` directory.
 6. Restart Splunk after installing the app so it registers the Twilio alert action. Review the searches in `default/savedsearches.conf` and confirm they match your event field extractions before enabling schedules.
 
 ## Configure browser rules
