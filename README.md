@@ -25,7 +25,7 @@ The objective is to collect security telemetry from the endpoint, analyze events
 
 Windows events flow to Splunk for search and investigation. A separate local watcher can read Windows Security and Defender events and send notifications directly, so notification delivery does not depend on Splunk scheduled-alert licensing.
 
-\`\`\`mermaid
+```mermaid
 flowchart LR
     subgraph Endpoint["Windows 11 laptop"]
         Security["Windows Security"]
@@ -67,7 +67,7 @@ flowchart LR
     Splunk --> Investigations
     Splunk -.->|"Saved-search alerts require an eligible license"| SMTP
     Splunk -.->|"Saved-search alerts require an eligible license"| Twilio
-\`\`\`
+```
 
 ## Current telemetry
 
@@ -91,34 +91,34 @@ These searches are starting points for exploring events in Splunk. Adjust the ti
 
 ### Windows authentication
 
-Find failed logon events (Event ID \`4625\`):
+Find failed logon events (Event ID `4625`):
 
-\`\`\`spl
+```spl
 index=windows sourcetype="WinEventLog:Security" EventCode=4625
-\`\`\`
+```
 
-Find successful logon events (Event ID \`4624\`):
+Find successful logon events (Event ID `4624`):
 
-\`\`\`spl
+```spl
 index=windows sourcetype="WinEventLog:Security" EventCode=4624
-\`\`\`
+```
 
 ### DNS
 
 Search DNS Client operational events:
 
-\`\`\`spl
+```spl
 index=windows sourcetype="WinEventLog:Microsoft-Windows-DNS-Client/Operational"
-\`\`\`
+```
 
 ### Gmail metadata
 
 Search collected Gmail metadata and display selected fields:
 
-\`\`\`spl
+```spl
 index=windows sourcetype="gmail:email"
 | table _time from to subject date message_id
-\`\`\`
+```
 
 ## Alerting
 
@@ -143,9 +143,10 @@ Browser process detections depend on Windows process-creation auditing (Event ID
 
 ## Repository structure
 
-\`\`\`text
+```text
 .
 ├── collector/
+│   ├── README.md
 │   ├── gmail_collector.py
 │   ├── windows_alert_config.example.json
 │   └── windows_alert_watcher.py
@@ -168,7 +169,7 @@ Browser process detections depend on Windows process-creation auditing (Event ID
 │       └── README.md
 ├── .gitignore
 └── README.md
-\`\`\`
+```
 
 ## Security and privacy
 
