@@ -116,7 +116,7 @@ index=windows sourcetype="gmail:email"
 
 The Splunk alerting app in [splunk/mini_soc_alerts](splunk/mini_soc_alerts/README.md) includes:
 
-- Browser launch rules for Chrome, Edge, and Firefox. Edit `lookups/browser_alert_rules.csv` to enable, disable, or tune each browser's process and suspicious-switch patterns.
+- Browser launch rules for Chrome, Edge, and Firefox. Edit `splunk/mini_soc_alerts/lookups/browser_alert_rules.csv` to enable, disable, or tune each browser's process and suspicious-switch patterns.
 - Windows Security detections for repeated failed logons, security audit log clearing, audit policy changes, user creation, and security-group membership changes.
 - Microsoft Defender malware and potentially unwanted software detections.
 - Email actions through Splunk and a custom Twilio SMS action.
