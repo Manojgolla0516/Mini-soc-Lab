@@ -1,0 +1,13 @@
+{
+  "poll_seconds": 5,
+  "batch_size": 500,
+  "failed_logon_threshold": 5,
+  "failed_logon_window_seconds": 300,
+  "cooldown_seconds": 900,
+  "state_file": ".windows_alert_state.json",
+  "browser_rules_csv": "../splunk/mini_soc_alerts/lookups/browser_alert_rules.csv",
+  "notifications": {
+    "email_enabled": false,
+    "sms_enabled": false
+  }
+}

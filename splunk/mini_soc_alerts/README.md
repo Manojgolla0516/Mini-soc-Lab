@@ -4,9 +4,13 @@ This app adds editable browser launch rules, Windows Security and Microsoft Defe
 
 The saved searches are installed with scheduling and notification actions disabled. Configure the recipients and Twilio credentials first; then enable the actions and schedules you want in Splunk.
 
+## License requirement
+
+Splunk Free disables built-in alerting. The saved-search actions in this app require an active Splunk license that includes alerting. For local Windows email/SMS notifications without Splunk scheduled alerts, use the separate [Windows alert watcher](../../collector/README.md).
+
 ## What it detects
 
-- **Browser launch options:** Windows Security process-creation events (Event ID 4688) for browsers enabled in `lookups/browser_alert_rules.csv`. The default rules flag remote-debugging, extension-loading, web-security-bypass, proxy-override, and Firefox automation/debug options.
+- **Browser launch options:** Windows Security process-creation events (Event ID `4688`) for browsers enabled in `lookups/browser_alert_rules.csv`. The default rules flag remote-debugging, extension-loading, web-security-bypass, proxy-override, and Firefox automation/debug options.
 - **Failed logon burst:** Five or more failed Windows logons for the same host, account, and source in a five-minute search window.
 - **Windows Security changes:** Security audit log cleared (1102), audit policy changed (4719), user account created (4720), or a member added to a global/local security group (4728/4732).
 - **Microsoft Defender detection:** Event ID 1116 in the Defender Operational log.

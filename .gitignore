@@ -11,6 +11,8 @@ credentials.json
 token.json
 client_secret*.json
 splunk/mini_soc_alerts/local/
+collector/windows_alert_config.local.json
+collector/.windows_alert_state.json
 
 # Python
 __pycache__/
